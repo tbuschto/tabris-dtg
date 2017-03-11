@@ -1,0 +1,27 @@
+{
+  "name": "tabris-dtg",
+  "version": "0.1.0",
+  "description": "",
+  "main": "dist/run.js",
+  "scripts": {
+    "build": "tsc -p .",
+    "start": "tsc -w -p ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/tbuschto/tabris-dtg.git"
+  },
+  "author": "tbuschto@eclipsesource.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tbuschto/tabris-dtg/issues"
+  },
+  "homepage": "https://github.com/tbuschto/tabris-dtg#readme",
+  "devDependencies": {
+    "tslint": "^4.5.1",
+    "typescript": "^2.2.1"
+  },
+  "dependencies": {
+    "@types/node": "^7.0.8"
+  }
+}
