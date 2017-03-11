@@ -18,10 +18,12 @@
   },
   "homepage": "https://github.com/tbuschto/tabris-dtg#readme",
   "devDependencies": {
+    "@types/node": "^7.0.8",
     "tslint": "^4.5.1",
     "typescript": "^2.2.1"
   },
   "dependencies": {
-    "@types/node": "^7.0.8"
+    "@types/sax": "^1.0.0",
+    "sax": "^1.2.2"
   }
 }

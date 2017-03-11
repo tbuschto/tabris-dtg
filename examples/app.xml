@@ -1,0 +1,5 @@
+<ui.contentView>
+  <TextView text="Hello World" />
+  <ImageView  />
+  <TextView text="Hello World2" />
+</ui.contentView>
