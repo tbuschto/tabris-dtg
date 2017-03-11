@@ -1,4 +1,4 @@
-import {createReadStream} from 'fs';
+import {createReadStream, createWriteStream} from 'fs';
 import {parser, SAXParser,  Tag, QualifiedTag} from 'sax';
 
 const filename = process.argv[2];
@@ -9,6 +9,7 @@ if (!filename) {
 
 const readStream = createReadStream(filename, {encoding: 'utf-8'});
 const saxParser = createSaxParser();
+const writeStream = createWriteStream(filename.replace('.xml', '-xml.ts'), {encoding: 'utf-8'});
 
 readStream.addListener('data', (chunk) => saxParser.write(chunk));
 readStream.addListener('end', () => saxParser.close())
@@ -17,10 +18,11 @@ readStream.addListener('error', (error) => console.error(error));
 function createSaxParser(): SAXParser {
   const result = parser(true, {});
   result.onopentag = (tag: Tag  | QualifiedTag) => {
-    console.log(`<${tag.name}>`);
+    writeStream.write(`<${tag.name}>`);
   };
   result.onclosetag = (tag: string) => {
-    console.log(`</${tag}>`);
+    writeStream.write(`</${tag}>`);
   };
+  result.onend = () => writeStream.close();
   return result;
 }
