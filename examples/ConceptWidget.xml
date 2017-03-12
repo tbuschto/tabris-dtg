@@ -1,0 +1,11 @@
+<import name="OtherXmlComponent" from "./OtherXmlComponent"/>
+
+<ConceptWidget
+    background="blue"
+    hightlightOnTouch="true"
+    customProperty="{Property type=boolean default=true}"> <!-- create custom property consumable in XML-->
+  <Composite id="wrapper"> <!-- creates protected field wrapper -->
+    <OtherXmlComponent visible="{Binding customProperty}"> <!-- one-way binding to root element -->
+    </OtherXmlComponent>
+  </Composite>
+</ConceptWidget>

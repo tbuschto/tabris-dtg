@@ -1,5 +1,6 @@
-import {createReadStream, createWriteStream} from 'fs';
+import { createReadStream, createWriteStream, WriteStream, ReadStream } from 'fs';
 import {parser, SAXParser,  Tag, QualifiedTag} from 'sax';
+import ModuleWriter from './ModuleWriter';
 
 const filename = process.argv[2];
 
@@ -7,22 +8,11 @@ if (!filename) {
   console.log('No file given');
 }
 
-const readStream = createReadStream(filename, {encoding: 'utf-8'});
-const saxParser = createSaxParser();
-const writeStream = createWriteStream(filename.replace('.xml', '-xml.ts'), {encoding: 'utf-8'});
+const readStream: ReadStream = createReadStream(filename, {encoding: 'utf-8'});
+const writeStream: WriteStream = createWriteStream(filename.replace('.xml', '-xml.ts'), {encoding: 'utf-8'});
+const moduleWriter: ModuleWriter = new ModuleWriter(writeStream);
+const saxParser: SAXParser = moduleWriter.saxParser;
 
 readStream.addListener('data', (chunk) => saxParser.write(chunk));
-readStream.addListener('end', () => saxParser.close())
+readStream.addListener('end', () => saxParser.close());
 readStream.addListener('error', (error) => console.error(error));
-
-function createSaxParser(): SAXParser {
-  const result = parser(true, {});
-  result.onopentag = (tag: Tag  | QualifiedTag) => {
-    writeStream.write(`<${tag.name}>`);
-  };
-  result.onclosetag = (tag: string) => {
-    writeStream.write(`</${tag}>`);
-  };
-  result.onend = () => writeStream.close();
-  return result;
-}
