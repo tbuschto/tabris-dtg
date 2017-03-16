@@ -38,6 +38,7 @@ jspm_packages
 
 # build output
 dist
+test/test.js
 
 # generated ts
 *xml.ts

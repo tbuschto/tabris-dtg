@@ -2,7 +2,7 @@ import {Tag} from 'sax';
 
 enum State {init, created, open, closed};
 
-export interface IWriter {(text: string): void;};
+export interface IWriter {(text: string): void; };
 export interface IElementFactory {(tag: Tag, write: IWriter, indet: string): CodeElement; };
 
 abstract class CodeElement {

@@ -2,4 +2,7 @@
   <TextView text="Hello World" />
   <ImageView  />
   <TextView text="Hello World2" />
+  <Composite>
+    <TextView/><ImageView/>
+  </Composite>
 </ui.contentView>
