@@ -4,7 +4,7 @@ import CodeElement from './CodeElement';
 export default class ExistingObject extends CodeElement {
 
   protected writeCreation(tag: Tag): void {
-    this.write('tabris.' + tag.name);
+    this.write(this.indent + 'tabris.' + tag.name);
   }
 
 }

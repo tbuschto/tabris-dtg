@@ -24,7 +24,7 @@ export default class ModuleWriter {
 
   private processTagOpen(tag: Tag): void {
     if (!this.rootElement) {
-      this.rootElement = createElement(tag, this.write.bind(this));
+      this.rootElement = createElement(tag, this.write.bind(this), '');
     }
     this.rootElement.processTagOpen(tag);
   }
@@ -43,8 +43,8 @@ export default class ModuleWriter {
 
 }
 
-function createElement(tag: Tag, write: IWriter): CodeElement {
+function createElement(tag: Tag, write: IWriter, indent: string): CodeElement {
   return tag.name.startsWith('ui.')
-    ? new ExistingObject(write, createElement)
-    : new NewObject(write, createElement);
+    ? new ExistingObject(write, createElement, indent)
+    : new NewObject(write, createElement, indent);
 }

@@ -3,20 +3,19 @@ import {Tag} from 'sax';
 enum State {init, created, open, closed};
 
 export interface IWriter {(text: string): void;};
-export interface IElementFactory {(tag: Tag, write: IWriter): CodeElement; };
+export interface IElementFactory {(tag: Tag, write: IWriter, indet: string): CodeElement; };
 
 abstract class CodeElement {
 
   protected readonly write: IWriter;
-  protected readonly writeln: IWriter;
+  protected readonly indent: string;
+  protected readonly createElement: IElementFactory;
+  protected _state: State = State.init;
+  protected currentChild: CodeElement = null;
 
-  private _state: State = State.init;
-  private currentChild: CodeElement = null;
-  private createElement: IElementFactory;
-
-  constructor(writer: IWriter, createElement: IElementFactory) {
+  constructor(writer: IWriter, createElement: IElementFactory, indent: string) {
     this.write = writer;
-    this.writeln = (text: string) => writer(text + '\n');
+    this.indent = indent;
     this.createElement = createElement;
   }
 
@@ -57,20 +56,19 @@ abstract class CodeElement {
   protected abstract writeCreation(tag: Tag): void;
 
   protected writeOpen(): void {
-    this.writeln('.append(');
+    this.write('.append(\n');
   }
 
   protected writeClose(): void {
-    this.write('\n)');
+    this.write('\n' + this.indent + ')');
   }
 
   protected writeSeparator(): void {
-    this.writeln(',');
+    this.write(',\n');
   }
 
   protected addChild(tag: Tag): void {
-    const writer: IWriter = (data: string) => this.write('  ' + data);
-    this.currentChild = this.createElement(tag, writer);
+    this.currentChild = this.createElement(tag, this.write, this.indent + '  ');
     this.currentChild.processTagOpen(tag);
   }
 
