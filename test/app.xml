@@ -1,8 +1,9 @@
 <ui.contentView>
   <TextView text="Hello World" />
-  <ImageView  />
+  <ImageView />
   <TextView text="Hello World2" />
   <Composite>
-    <TextView/><ImageView/>
+    <TextView/>
+    <ImageView/>
   </Composite>
 </ui.contentView>
