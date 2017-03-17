@@ -8,4 +8,4 @@ tabris.ui.contentView.append(
     new tabris.TextView(),
     new tabris.ImageView()
   )
-)
+);

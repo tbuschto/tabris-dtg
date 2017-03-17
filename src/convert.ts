@@ -13,12 +13,12 @@ export default function convert(file: string, done: {(success: boolean): void; }
 
   readStream.addListener('end', () => {
     saxParser.close();
-    done(true);
   });
 
   readStream.addListener('error', (error) => {
     console.error(error);
-    done(false);
   });
+
+  writeStream.addListener('finish', () => done(true));
 
 }
