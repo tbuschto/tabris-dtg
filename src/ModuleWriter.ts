@@ -1,8 +1,9 @@
 import {createReadStream, WriteStream} from 'fs';
 import {parser, SAXParser,  Tag, QualifiedTag} from 'sax';
-import CodeElement, {IWriter} from './elements/CodeElement';
-import ExistingObject from './elements/ExistingObject';
-import NewObject from './elements/NewObject';
+import CodeElement from './elements/CodeElement';
+import UI from './elements/UI';
+import SingletonWidget from './elements/SingletonWidget';
+import NewWidget from './elements/NewWidget';
 
 const imports = `import * as tabris from 'tabris';`;
 
@@ -15,7 +16,7 @@ export default class ModuleWriter {
 
   constructor(writeStream: WriteStream) {
     this.stream = writeStream;
-    this.write(imports + '\n\n');
+    this.stream.write(imports + '\n\n');
     this.saxParser = parser(true, {});
     this.saxParser.onopentag = this.processTagOpen.bind(this);
     this.saxParser.onclosetag = this.processTagClose.bind(this);
@@ -24,7 +25,7 @@ export default class ModuleWriter {
 
   private processTagOpen(tag: Tag): void {
     if (!this.rootElement) {
-      this.rootElement = createElement(tag, this.write.bind(this), '');
+      this.rootElement = this.createRootElement(tag);
     }
     this.rootElement.processTagOpen(tag);
   }
@@ -37,14 +38,24 @@ export default class ModuleWriter {
     this.stream.end(';\n');
   }
 
-  private write(data: string): void {
-    this.stream.write(data || '');
+  private createRootElement(tag: Tag): CodeElement {
+    if (tag.name === 'ui') {
+      return new UI(
+        (data: string) => this.stream.write(data),
+        elementFactory
+      );
+    } else {
+      throw new Error('Invalid root element "' + tag.name + '"');
+    }
   }
 
 }
 
-function createElement(tag: Tag, write: IWriter, indent: string): CodeElement {
-  return tag.name.startsWith('ui.')
-    ? new ExistingObject(write, createElement, indent)
-    : new NewObject(write, createElement, indent);
+function elementFactory(type: string, parent: CodeElement): CodeElement {
+  if (type === 'NewWidget') {
+    return new NewWidget(parent);
+  }
+  if (type === 'SingletonWidget') {
+    return new SingletonWidget(parent);
+  }
 }

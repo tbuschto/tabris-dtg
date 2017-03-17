@@ -9,3 +9,7 @@ tabris.ui.contentView.append(
     new tabris.ImageView()
   )
 );
+
+tabris.ui.drawer.append(
+  new tabris.CollectionView()
+);

@@ -1,9 +1,14 @@
-<ui.contentView>
-  <TextView text="Hello World" />
-  <ImageView />
-  <TextView text="Hello World2" />
-  <Composite>
-    <TextView/>
-    <ImageView/>
-  </Composite>
-</ui.contentView>
+<ui>
+  <contentView>
+    <TextView text="Hello World" />
+    <ImageView />
+    <TextView text="Hello World2" />
+    <Composite>
+      <TextView/>
+      <ImageView/>
+    </Composite>
+  </contentView>
+  <drawer>
+    <CollectionView/>
+  </drawer>
+</ui>
