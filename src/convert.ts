@@ -9,16 +9,28 @@ export default function convert(file: string, done: {(success: boolean): void; }
   const moduleWriter: ModuleWriter = new ModuleWriter(writeStream);
   const saxParser: SAXParser = moduleWriter.saxParser;
 
-  readStream.addListener('data', (chunk) => saxParser.write(chunk));
+  readStream.addListener('data', (chunk) => {
+    try {
+      saxParser.write(chunk)
+    } catch(ex) {
+      fail(ex);
+    }
+  });
 
   readStream.addListener('end', () => {
     saxParser.close();
   });
 
-  readStream.addListener('error', (error) => {
-    console.error(error);
-  });
+  readStream.addListener('error', fail);
 
   writeStream.addListener('finish', () => done(true));
+
+  function fail(ex: Error) {
+    console.error(ex);
+    readStream.close();
+    writeStream.close();
+    saxParser.close();
+    done(false);
+  }
 
 }
