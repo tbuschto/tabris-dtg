@@ -1,11 +1,21 @@
-<import name="OtherXmlComponent" from "./OtherXmlComponent"/>
-
 <ConceptWidget
+    xmlns="http://eclipsesource.com/tabris/2.0/widgets"
+    xmlns:x="http://eclipsesource.com/tabris/2.0/extensions"
+    xmlns:local="import(*.xml)"
     background="blue"
     hightlightOnTouch="true"
     customProperty="{Property type=boolean default=true}"> <!-- create custom property consumable in XML-->
   <Composite id="wrapper"> <!-- creates protected field wrapper -->
-    <OtherXmlComponent visible="{Binding customProperty}"> <!-- one-way binding to root element -->
-    </OtherXmlComponent>
+    <local:OtherXmlComponent visible="{Binding customProperty}"> <!-- one-way binding to root element -->
+    </local:OtherXmlComponent>
   </Composite>
+  <x:column> <!-- Actually a composite, but instructs the generator to arragen children in a column using layout data -->
+    <TextView>ContentPropertyValue</TextView> <!-- Widgets not supporting children can support other content -->
+    <TextView>
+      <![CDATA[
+        Now, this is a story all about how
+        My life got flipped-turned upside down...
+      ]]>
+    </TextView>
+  </x:column>
 </ConceptWidget>
