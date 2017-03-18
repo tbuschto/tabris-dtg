@@ -4,6 +4,7 @@ import CodeElement from './elements/CodeElement';
 import UI from './elements/UI';
 import SingletonWidget from './elements/SingletonWidget';
 import NewWidget from './elements/NewWidget';
+import CustomWidget from './elements/CustomWidget';
 
 const imports = `import * as tabris from 'tabris';`;
 
@@ -35,12 +36,17 @@ export default class ModuleWriter {
   }
 
   private processDocumentEnd() {
-    this.stream.end(';\n');
+    this.stream.end();
   }
 
   private createRootElement(tag: Tag): CodeElement {
     if (tag.name === 'ui') {
       return new UI(
+        (data: string) => this.stream.write(data),
+        elementFactory
+      );
+    } else if (tag.name[0] === tag.name[0].toUpperCase()) {
+      return new CustomWidget(
         (data: string) => this.stream.write(data),
         elementFactory
       );

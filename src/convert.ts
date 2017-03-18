@@ -8,14 +8,17 @@ export default function convert(file: string, done: {(success: boolean): void; }
   const writeStream: WriteStream = createWriteStream(file.replace('.xml', '.xml.ts'), {encoding: 'utf-8'});
   const moduleWriter: ModuleWriter = new ModuleWriter(writeStream);
   const saxParser: SAXParser = moduleWriter.saxParser;
+  let closed = false;
 
   readStream.addListener('data', (chunk) => {
     try {
-      saxParser.write(chunk)
-    } catch(ex) {
+      saxParser.write(chunk);
+    } catch (ex) {
       fail(ex);
     }
   });
+
+  saxParser.onerror = fail;
 
   readStream.addListener('end', () => {
     saxParser.close();
@@ -23,14 +26,28 @@ export default function convert(file: string, done: {(success: boolean): void; }
 
   readStream.addListener('error', fail);
 
-  writeStream.addListener('finish', () => done(true));
+  writeStream.addListener('finish', success);
+
+  function success(ex: Error) {
+    if (!closed) {
+      closed = true;
+      done(true);
+    }
+  }
 
   function fail(ex: Error) {
-    console.error(ex);
-    readStream.close();
-    writeStream.close();
-    saxParser.close();
-    done(false);
+    if (!closed) {
+      closed = true;
+      console.error('Conversion failed: ' + ex);
+      readStream.close();
+      writeStream.close();
+      try {
+        saxParser.close();
+      } catch (streamEx) {
+        // may fail if in saxParser event
+      }
+      done(false);
+    }
   }
 
 }
