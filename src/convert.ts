@@ -5,7 +5,7 @@ import ModuleWriter from './ModuleWriter';
 export default function convert(file: string, done: {(success: boolean): void; }) {
 
   const readStream: ReadStream = createReadStream(file, {encoding: 'utf-8'});
-  const writeStream: WriteStream = createWriteStream(file.replace('.xml', '-xml.ts'), {encoding: 'utf-8'});
+  const writeStream: WriteStream = createWriteStream(file.replace('.xml', '.xml.ts'), {encoding: 'utf-8'});
   const moduleWriter: ModuleWriter = new ModuleWriter(writeStream);
   const saxParser: SAXParser = moduleWriter.saxParser;
 
