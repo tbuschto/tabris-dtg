@@ -1,3 +1,4 @@
+/* tslint:disable */
 import * as tabris from 'tabris';
 
 export default class extends tabris.Composite {

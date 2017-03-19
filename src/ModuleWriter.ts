@@ -6,6 +6,7 @@ import SingletonWidget from './elements/SingletonWidget';
 import NewWidget from './elements/NewWidget';
 import CustomWidget from './elements/CustomWidget';
 
+const tslint = '/* tslint:disable */';
 const imports = `import * as tabris from 'tabris';`;
 
 export default class ModuleWriter {
@@ -17,6 +18,7 @@ export default class ModuleWriter {
 
   constructor(writeStream: WriteStream) {
     this.stream = writeStream;
+    this.stream.write(tslint + '\n');
     this.stream.write(imports + '\n\n');
     this.saxParser = parser(true, {});
     this.saxParser.onopentag = this.processTagOpen.bind(this);
