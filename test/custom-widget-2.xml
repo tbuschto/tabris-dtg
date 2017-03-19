@@ -1,0 +1,4 @@
+<Composite background="blue">
+  <TextView></TextView>
+  <ImageView></ImageView>
+</Composite>

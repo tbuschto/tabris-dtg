@@ -5,7 +5,9 @@ export default class NewWidget extends Widget {
 
   protected writeInit(tag: Tag): void {
     this.write(this.indent + 'new tabris.' + tag.name + '(');
-    this.writeProperties(tag);
+    if (Object.keys(tag.attributes).length > 0) {
+      this.writeProperties(tag);
+    }
     this.write(')');
   }
 

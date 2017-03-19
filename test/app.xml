@@ -1,8 +1,8 @@
-<ui>
-  <contentView>
+<ui win_theme="dark">
+  <contentView background="blue">
     <TextView text="Hello World" />
     <ImageView />
-    <TextView text="Hello World2" />
+    <TextInput text="Hello World2" message="Hello World3"/>
     <Composite>
       <TextView/>
       <ImageView/>

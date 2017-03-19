@@ -11,6 +11,11 @@ export default class SingletonWidget extends Widget {
 
   protected writeInit(tag: Tag): void {
     this.write('tabris.ui.' + tag.name);
+    if (Object.keys(tag.attributes).length > 0) {
+      this.write('.set(');
+      this.writeProperties(tag);
+      this.write(')');
+    }
   }
 
 }

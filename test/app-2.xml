@@ -1,0 +1,14 @@
+<ui>
+  <contentView>
+    <TextView/>
+    <ImageView/>
+    <TextView/>
+    <Composite>
+      <TextView/>
+      <ImageView/>
+    </Composite>
+  </contentView>
+  <drawer>
+    <CollectionView/>
+  </drawer>
+</ui>

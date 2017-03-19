@@ -4,8 +4,12 @@ import Widget from './Widget';
 
 export default class UI extends RootWidget {
 
-  protected writeInit(): void {
-    // TODO: set properties
+  protected writeInit(tag: Tag): void {
+    if (Object.keys(tag.attributes).length > 0) {
+      this.write('tabris.ui.set(');
+      this.writeProperties(tag);
+      this.write(');\n\n');
+    }
   }
 
   protected writeOpen(): void {

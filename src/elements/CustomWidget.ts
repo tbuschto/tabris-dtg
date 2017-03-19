@@ -6,9 +6,15 @@ export default class CustomWidget extends RootWidget {
   protected writeInit(tag: Tag): void {
     this.write('export default class extends tabris.' + tag.name + ' {\n\n');
     this.indent += '  ';
-    this.write(this.indent + 'constructor() {\n' );
+    this.write(this.indent + 'constructor(properties) {\n' );
     this.indent += '  ';
-    this.write(this.indent + 'super();\n')
+    if (Object.keys(tag.attributes).length > 0) {
+      this.write(this.indent + 'super(Object.assign(');
+      this.writeProperties(tag);
+      this.write(', properties || {}));\n')
+    } else {
+      this.write(this.indent + 'super(properties || {});\n');
+    }
     this.write(this.indent + 'this');
   }
 
