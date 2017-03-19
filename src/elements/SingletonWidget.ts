@@ -9,6 +9,10 @@ export default class SingletonWidget extends Widget {
     this.indent = '';
   }
 
+  get type() {
+    return this.api.getPropertyType((this.parent as Widget).type, this.tagName);
+  }
+
   protected writeInit(tag: Tag): void {
     this.write('tabris.ui.' + tag.name);
     if (Object.keys(tag.attributes).length > 0) {

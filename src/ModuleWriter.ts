@@ -5,6 +5,7 @@ import UI from './elements/UI';
 import SingletonWidget from './elements/SingletonWidget';
 import NewWidget from './elements/NewWidget';
 import CustomWidget from './elements/CustomWidget';
+import TabrisAPI from './TabrisAPI';
 
 const tslint = '/* tslint:disable */';
 const imports = `import * as tabris from 'tabris';`;
@@ -15,6 +16,7 @@ export default class ModuleWriter {
 
   private rootElement: CodeElement;
   private stream: WriteStream;
+  private api: TabrisAPI = new TabrisAPI('2.0');
 
   constructor(writeStream: WriteStream) {
     this.stream = writeStream;
@@ -45,12 +47,14 @@ export default class ModuleWriter {
     if (tag.name === 'ui') {
       return new UI(
         (data: string) => this.stream.write(data),
-        elementFactory
+        elementFactory,
+        this.api
       );
     } else if (tag.name[0] === tag.name[0].toUpperCase()) {
       return new CustomWidget(
         (data: string) => this.stream.write(data),
-        elementFactory
+        elementFactory,
+        this.api
       );
     } else {
       throw new Error('Invalid root element "' + tag.name + '"');

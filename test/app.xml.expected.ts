@@ -6,14 +6,17 @@ tabris.ui.set({
 });
 
 tabris.ui.contentView.set({
-  'background': 'blue'
+  'background': 'blue',
+  'opacity': 0.4
 }).append(
   new tabris.TextView({
-    'text': 'Hello World'
+    'text': 'Hello World',
+    'highlightOnTouch': true
   }),
   new tabris.ImageView(),
   new tabris.TextInput({
     'text': 'Hello World2',
+//    'foo': 'bar',
     'message': 'Hello World3'
   }),
   new tabris.Composite().append(

@@ -3,6 +3,10 @@ import CodeElement from './CodeElement';
 
 abstract class Widget extends CodeElement {
 
+  get type(): string {
+    return this.tagName;
+  }
+
   protected writeProperties(tag: Tag) {
     this.write('{\n');
     this.indent += '  ';
@@ -16,8 +20,17 @@ abstract class Widget extends CodeElement {
     this.write('\n' + this.indent + '}');
   }
 
-  protected writeProperty(name: string, value: string) {
-    this.write(`${this.indent}'${name}': '${value}'`);
+  protected writeProperty(name: string, value: string): boolean {
+    let type = this.api.getPropertyType(this.type, name);
+    if (!type) {
+      this.write('//');
+    }
+    this.write(`${this.indent}'${name}': ${format(type, value)}`);
+    return true;
+  }
+
+  protected formatPropertyValue(type: string, value: string): string {
+    return '';
   }
 
   protected writeOpen(): void {
@@ -43,3 +56,11 @@ abstract class Widget extends CodeElement {
 }
 
 export default Widget;
+
+function format(type: string, value: string) {
+  if (type === 'boolean' || type === 'number') {
+    return value;
+  }
+  return '\'' + value + '\'';
+
+}

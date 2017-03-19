@@ -1,12 +1,14 @@
 import {Tag} from 'sax';
+import TabrisAPI from '../TabrisAPI';
 
 export enum State {uninitialized, initialized, open, closed};
 
 abstract class CodeElement {
 
   protected indent: string;
+  protected tagName: string;
+  protected readonly parent: CodeElement;
   private currentChild: CodeElement = null;
-  private readonly parent: CodeElement;
   private _state: State = State.uninitialized;
   private childCount: number = 0;
 
@@ -20,6 +22,7 @@ abstract class CodeElement {
   }
 
   public processTagOpen(tag: Tag): void {
+    this.tagName = tag.name;
     if (this.state === State.uninitialized) {
       this.writeInit(tag);
       this._state = State.initialized;
@@ -67,6 +70,10 @@ abstract class CodeElement {
   protected abstract writeClose(): void;
 
   protected abstract writeEnd(): void;
+
+  protected get api(): TabrisAPI {
+    return this.parent.api;
+  }
 
   protected write(data): void {
     this.parent.write(data);

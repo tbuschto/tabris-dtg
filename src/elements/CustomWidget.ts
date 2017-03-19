@@ -11,7 +11,7 @@ export default class CustomWidget extends RootWidget {
     if (Object.keys(tag.attributes).length > 0) {
       this.write(this.indent + 'super(Object.assign(');
       this.writeProperties(tag);
-      this.write(', properties || {}));\n')
+      this.write(', properties || {}));\n');
     } else {
       this.write(this.indent + 'super(properties || {});\n');
     }

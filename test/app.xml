@@ -1,8 +1,8 @@
 <ui win_theme="dark">
-  <contentView background="blue">
-    <TextView text="Hello World" />
+  <contentView background="blue"  opacity="0.4">
+    <TextView text="Hello World" highlightOnTouch="true"/>
     <ImageView />
-    <TextInput text="Hello World2" message="Hello World3"/>
+    <TextInput text="Hello World2" foo="bar" message="Hello World3"/>
     <Composite>
       <TextView/>
       <ImageView/>

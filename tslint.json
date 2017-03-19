@@ -10,6 +10,7 @@
     "max-line-length": [true, 120],
     "variable-name": [false],
     "no-console": [false],
-    "forin": false
+    "forin": false,
+    "interface-name": [false]
   }
 }
