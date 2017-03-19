@@ -6,7 +6,7 @@
     hightlightOnTouch="true"
     customProperty="{Property type=boolean default=true}"> <!-- create custom property consumable in XML-->
   <Composite id="wrapper"> <!-- creates protected field wrapper -->
-    <local:OtherXmlComponent visible="{Binding customProperty}"> <!-- one-way binding to root element -->
+    <local:OtherXmlComponent visible="{{customProperty}}"> <!-- one-way binding to root element -->
     </local:OtherXmlComponent>
   </Composite>
   <x:column> <!-- Actually a composite, but instructs the generator to arragen children in a column using layout data -->

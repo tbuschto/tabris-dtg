@@ -1,4 +1,4 @@
-<Composite background="blue">
-  <TextView></TextView>
-  <ImageView></ImageView>
+<Composite background="blue" id="foo">
+  <TextView id="bar"></TextView>
+  <ImageView id="baz"></ImageView>
 </Composite>

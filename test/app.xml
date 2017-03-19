@@ -3,7 +3,7 @@
     <TextView text="Hello World" highlightOnTouch="true"/>
     <ImageView />
     <TextInput text="Hello World2" foo="bar" message="Hello World3"/>
-    <Composite>
+    <Composite id="foo">
       <TextView/>
       <ImageView/>
     </Composite>

@@ -19,7 +19,9 @@ tabris.ui.contentView.set({
 //    'foo': 'bar',
     'message': 'Hello World3'
   }),
-  new tabris.Composite().append(
+  new tabris.Composite({
+    'id': 'foo'
+  }).append(
     new tabris.TextView(),
     new tabris.ImageView()
   )

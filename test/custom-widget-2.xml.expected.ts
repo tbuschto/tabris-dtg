@@ -5,12 +5,21 @@ export default class extends tabris.Composite {
 
   constructor(properties) {
     super(Object.assign({
-      'background': 'blue'
+      'background': 'blue',
+      'id': 'foo'
     }, properties || {}));
     this.append(
-      new tabris.TextView(),
-      new tabris.ImageView()
+      this.bar = new tabris.TextView({
+        'id': 'bar'
+      }),
+      this.baz = new tabris.ImageView({
+        'id': 'baz'
+      })
     );
   }
+
+  protected bar: tabris.TextView;
+
+  protected baz: tabris.ImageView;
 
 }

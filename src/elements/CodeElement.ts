@@ -7,18 +7,22 @@ abstract class CodeElement {
 
   protected indent: string;
   protected tagName: string;
-  protected readonly parent: CodeElement;
+  private readonly _parent: CodeElement;
   private currentChild: CodeElement = null;
   private _state: State = State.uninitialized;
   private childCount: number = 0;
 
   constructor(parent: CodeElement) {
-    this.parent = parent;
+    this._parent = parent;
     this.indent = parent != null ? parent.indent + '  ' : '';
   }
 
   public get state(): State {
     return this._state;
+  }
+
+  public get parent(): CodeElement {
+    return this._parent;
   }
 
   public processTagOpen(tag: Tag): void {
