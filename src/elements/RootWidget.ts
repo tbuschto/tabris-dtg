@@ -1,18 +1,18 @@
 import {Tag} from 'sax';
 import CodeElement from './CodeElement';
 import Widget from './Widget';
-import TabrisAPI from '../TabrisAPI';
+import {API} from '../TabrisAPI';
 
 interface IElementFactory {(type: string, parent: CodeElement): CodeElement; };
 interface IWriter {(data: string): void; };
 
 abstract class RootWidget extends Widget {
 
-  protected readonly _api;
+  protected readonly _api: API;
   private elementFactory: IElementFactory;
   private writer: IWriter;
 
-  constructor(writer: IWriter, elementFactory: IElementFactory, api: TabrisAPI) {
+  constructor(writer: IWriter, elementFactory: IElementFactory, api: API) {
     super(null);
     this.writer = writer;
     this.elementFactory = elementFactory;
@@ -23,7 +23,7 @@ abstract class RootWidget extends Widget {
     this.writer(data);
   }
 
-  protected get api(): TabrisAPI {
+  protected get api(): API {
     return this._api;
   }
 

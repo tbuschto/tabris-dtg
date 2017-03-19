@@ -10,7 +10,7 @@ export default class SingletonWidget extends Widget {
   }
 
   get type() {
-    return this.api.getPropertyType((this.parent as Widget).type, this.tagName);
+    return 'tabris.' + this.api.getPropertyType((this.parent as Widget).type, this.tagName);
   }
 
   protected writeInit(tag: Tag): void {

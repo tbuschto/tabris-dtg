@@ -4,7 +4,7 @@ import CodeElement from './CodeElement';
 abstract class Widget extends CodeElement {
 
   get type(): string {
-    return this.tagName;
+    return 'tabris.' + this.tagName;
   }
 
   protected writeProperties(tag: Tag) {

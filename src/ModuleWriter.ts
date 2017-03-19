@@ -6,9 +6,10 @@ import SingletonWidget from './elements/SingletonWidget';
 import NewWidget from './elements/NewWidget';
 import CustomWidget from './elements/CustomWidget';
 import TabrisAPI from './TabrisAPI';
+import Scope from './Scope';
 
 const tslint = '/* tslint:disable */';
-const imports = `import * as tabris from 'tabris';`;
+const tabrisImport = `import * as tabris from 'tabris';`;
 
 export default class ModuleWriter {
 
@@ -16,12 +17,14 @@ export default class ModuleWriter {
 
   private rootElement: CodeElement;
   private stream: WriteStream;
-  private api: TabrisAPI = new TabrisAPI('2.0');
+  private scope: Scope;
 
   constructor(writeStream: WriteStream) {
     this.stream = writeStream;
     this.stream.write(tslint + '\n');
-    this.stream.write(imports + '\n\n');
+    this.stream.write(tabrisImport + '\n\n');
+    this.scope = new Scope();
+    this.scope.addNamespace('tabris', new TabrisAPI('2.0'));
     this.saxParser = parser(true, {});
     this.saxParser.onopentag = this.processTagOpen.bind(this);
     this.saxParser.onclosetag = this.processTagClose.bind(this);
@@ -48,13 +51,13 @@ export default class ModuleWriter {
       return new UI(
         (data: string) => this.stream.write(data),
         elementFactory,
-        this.api
+        this.scope
       );
     } else if (tag.name[0] === tag.name[0].toUpperCase()) {
       return new CustomWidget(
         (data: string) => this.stream.write(data),
         elementFactory,
-        this.api
+        this.scope
       );
     } else {
       throw new Error('Invalid root element "' + tag.name + '"');

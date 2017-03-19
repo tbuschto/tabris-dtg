@@ -1,6 +1,12 @@
 import {readdirSync, readFileSync} from 'fs';
 import {resolve} from 'path';
 
+export interface API {
+
+  getPropertyType(typeName: string, propName: string): string;
+
+}
+
 export default class TabrisAPI {
 
   private readonly api: TabrisTypeCollection;
