@@ -1,5 +1,5 @@
-<ui>
+<ui win_theme='dark'>
   <contentView>
-    <TextView text="Hello World"/>
+    <TextView font="italic 24px" text="Hello World"/>
   </contentView>
 </ui>
