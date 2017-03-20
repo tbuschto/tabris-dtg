@@ -1,0 +1,3 @@
+<Tab title="Tab 1">
+  <TextView left="12" top="12" font="italic 24px" text="Hello"/>
+</Tab>
