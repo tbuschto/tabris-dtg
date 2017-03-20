@@ -1,4 +1,4 @@
-import {Tag} from 'sax';
+import {QualifiedTag} from 'sax';
 import RootWidget from './RootWidget';
 
 export default class CustomWidget extends RootWidget {
@@ -9,10 +9,10 @@ export default class CustomWidget extends RootWidget {
     this.fields.push(code);
   }
 
-  protected writeInit(tag: Tag): void {
-    this.write('export default class extends tabris.' + tag.name + ' {\n\n');
+  protected writeInit(tag: QualifiedTag): void {
+    this.write('export default class extends ' + this.type + ' {\n\n');
     this.indent += '  ';
-    this.write(this.indent + 'constructor(properties) {\n' );
+    this.write(this.indent + 'constructor(properties?: ' + this.type + 'Properties) {\n' );
     this.indent += '  ';
     if (Object.keys(tag.attributes).length > 0) {
       this.write(this.indent + 'super(Object.assign(');
@@ -33,7 +33,7 @@ export default class CustomWidget extends RootWidget {
     this.write('}\n');
   }
 
-  protected getChildType(tag: Tag) {
+  protected getChildType(tag: QualifiedTag) {
     return 'NewWidget';
   }
 

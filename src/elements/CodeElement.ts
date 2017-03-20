@@ -1,4 +1,4 @@
-import {Tag} from 'sax';
+import {QualifiedTag} from 'sax';
 import {API} from '../TabrisAPI';
 
 export enum State {uninitialized, initialized, open, closed};
@@ -6,7 +6,7 @@ export enum State {uninitialized, initialized, open, closed};
 abstract class CodeElement {
 
   protected indent: string;
-  protected tagName: string;
+  protected tag: QualifiedTag;
   private readonly _parent: CodeElement;
   private currentChild: CodeElement = null;
   private _state: State = State.uninitialized;
@@ -25,8 +25,8 @@ abstract class CodeElement {
     return this._parent;
   }
 
-  public processTagOpen(tag: Tag): void {
-    this.tagName = tag.name;
+  public processTagOpen(tag: QualifiedTag): void {
+    this.tag = tag;
     if (this.state === State.uninitialized) {
       this.writeInit(tag);
       this._state = State.initialized;
@@ -59,13 +59,13 @@ abstract class CodeElement {
     }
   }
 
-  protected addChild(tag: Tag): void {
+  protected addChild(tag: QualifiedTag): void {
     this.currentChild = this.createElement(this.getChildType(tag), this);
     this.currentChild.processTagOpen(tag);
     this.childCount++;
   }
 
-  protected abstract writeInit(tag: Tag): void;
+  protected abstract writeInit(tag: QualifiedTag): void;
 
   protected abstract writeOpen(): void;
 
@@ -83,7 +83,7 @@ abstract class CodeElement {
     this.parent.write(data);
   }
 
-  protected abstract getChildType(tag: Tag): string;
+  protected abstract getChildType(tag: QualifiedTag): string;
 
   // Unfortunately referencing  a class in it's own superclass does not work
   // in ES6/TS unless they are both in the same module. This indirection works

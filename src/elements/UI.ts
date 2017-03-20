@@ -1,4 +1,4 @@
-import {Tag} from 'sax';
+import {QualifiedTag} from 'sax';
 import RootWidget from './RootWidget';
 import Widget from './Widget';
 
@@ -8,7 +8,7 @@ export default class UI extends RootWidget {
     return 'tabris.UI';
   }
 
-  protected writeInit(tag: Tag): void {
+  protected writeInit(tag: QualifiedTag): void {
     if (Object.keys(tag.attributes).length > 0) {
       this.write('tabris.ui.set(');
       this.writeProperties(tag);
@@ -32,7 +32,7 @@ export default class UI extends RootWidget {
     this.write(';\n');
   }
 
-  protected getChildType(tag: Tag) {
+  protected getChildType(tag: QualifiedTag) {
     return 'SingletonWidget';
   }
 

@@ -1,15 +1,19 @@
 import {createReadStream, WriteStream} from 'fs';
-import {parser, SAXParser,  Tag, QualifiedTag} from 'sax';
+import {parser, SAXParser, QualifiedTag, QualifiedAttribute} from 'sax';
 import CodeElement from './elements/CodeElement';
 import UI from './elements/UI';
 import SingletonWidget from './elements/SingletonWidget';
 import NewWidget from './elements/NewWidget';
 import CustomWidget from './elements/CustomWidget';
-import TabrisAPI from './TabrisAPI';
+import TabrisAPI, {API} from './TabrisAPI';
 import Scope from './Scope';
+import {basename} from 'path';
 
 const tslint = '/* tslint:disable */';
 const tabrisImport = `import * as tabris from 'tabris';`;
+const catchImport = /^import\((.+)\)$/;
+
+interface ImportResolver {(path: string): API; };
 
 export default class ModuleWriter {
 
@@ -17,22 +21,26 @@ export default class ModuleWriter {
 
   private rootElement: CodeElement;
   private stream: WriteStream;
+  private importResolver: ImportResolver;
   private scope: Scope;
 
-  constructor(writeStream: WriteStream) {
+  constructor(writeStream: WriteStream, importResolver: ImportResolver) {
     this.stream = writeStream;
+    this.importResolver = importResolver;
     this.stream.write(tslint + '\n');
-    this.stream.write(tabrisImport + '\n\n');
+    this.stream.write(tabrisImport + '\n');
     this.scope = new Scope();
     this.scope.addNamespace('tabris', new TabrisAPI('2.0'));
-    this.saxParser = parser(true, {});
+    this.saxParser = parser(true, {xmlns: true});
     this.saxParser.onopentag = this.processTagOpen.bind(this);
     this.saxParser.onclosetag = this.processTagClose.bind(this);
     this.saxParser.onend = this.processDocumentEnd.bind(this);
   }
 
-  private processTagOpen(tag: Tag): void {
+  private processTagOpen(tag: QualifiedTag): void {
     if (!this.rootElement) {
+      this.handleImports(tag);
+      this.stream.write('\n');
       this.rootElement = this.createRootElement(tag);
     }
     this.rootElement.processTagOpen(tag);
@@ -46,7 +54,7 @@ export default class ModuleWriter {
     this.stream.end();
   }
 
-  private createRootElement(tag: Tag): CodeElement {
+  private createRootElement(tag: QualifiedTag): CodeElement {
     if (tag.name === 'ui') {
       return new UI(
         (data: string) => this.stream.write(data),
@@ -61,6 +69,22 @@ export default class ModuleWriter {
       );
     } else {
       throw new Error('Invalid root element "' + tag.name + '"');
+    }
+  }
+
+  private handleImports(tag: QualifiedTag) {
+    for (let attribute in tag.attributes) {
+      let xmlValue: QualifiedAttribute = tag.attributes[attribute];
+      if (xmlValue.prefix === 'xmlns') {
+        let matches = catchImport.exec(xmlValue.value);
+        if (matches) {
+          let ns: string = xmlValue.local;
+          let path: string = matches[1].slice(0, -4);
+          let importName: string = ns + '_' + basename(path);
+          this.stream.write(`import ${importName} from '${path}';\n`);
+          this.scope.addNamespace(ns, this.importResolver(path));
+        }
+      }
     }
   }
 

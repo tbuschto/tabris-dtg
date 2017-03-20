@@ -9,7 +9,7 @@ export default class Scope {
   }
 
   public getPropertyType(typeName: string, propName: string): string {
-    let type: string[] = typeName.split('.');
+    let type: string[] = typeName.split(/[\._]/);
     if (this.namespaces[type[0]]) {
       return this.namespaces[type[0]].getPropertyType(type[1], propName);
     }

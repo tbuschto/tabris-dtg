@@ -1,12 +1,13 @@
-import { createReadStream, createWriteStream, WriteStream, ReadStream } from 'fs';
+import {createReadStream, createWriteStream, WriteStream, ReadStream} from 'fs';
 import {parser, SAXParser,  Tag, QualifiedTag} from 'sax';
 import ModuleWriter from './ModuleWriter';
+import {API} from './TabrisAPI';
 
 export default function convert(file: string, done: {(success: boolean): void; }) {
 
   const readStream: ReadStream = createReadStream(file, {encoding: 'utf-8'});
   const writeStream: WriteStream = createWriteStream(file.replace('.xml', '.xml.ts'), {encoding: 'utf-8'});
-  const moduleWriter: ModuleWriter = new ModuleWriter(writeStream);
+  const moduleWriter: ModuleWriter = new ModuleWriter(writeStream, nsTestResolver);
   const saxParser: SAXParser = moduleWriter.saxParser;
   let closed = false;
 
@@ -50,4 +51,12 @@ export default function convert(file: string, done: {(success: boolean): void; }
     }
   }
 
+}
+
+function nsTestResolver(ns: string): API {
+  return {
+    getPropertyType(name: string, propName: string): string {
+      return 'string';
+    }
+  };
 }

@@ -1,4 +1,3 @@
-import {Tag} from 'sax';
 import CodeElement from './CodeElement';
 import Widget from './Widget';
 import {API} from '../TabrisAPI';

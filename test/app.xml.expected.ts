@@ -1,5 +1,6 @@
 /* tslint:disable */
 import * as tabris from 'tabris';
+import import_CustomWidget from './CustomWidget';
 
 tabris.ui.set({
   'win_theme': 'dark'
@@ -28,5 +29,8 @@ tabris.ui.contentView.set({
 );
 
 tabris.ui.drawer.append(
-  new tabris.CollectionView()
+  new tabris.CollectionView(),
+  new import_CustomWidget({
+    'test': 'defaults to string'
+  })
 );

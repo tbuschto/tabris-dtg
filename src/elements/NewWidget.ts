@@ -1,4 +1,4 @@
-import {Tag} from 'sax';
+import {QualifiedTag} from 'sax';
 import Widget from './Widget';
 import CustomWidget from './CustomWidget';
 import CodeElement from './CodeElement';
@@ -12,10 +12,10 @@ export default class NewWidget extends Widget {
     this.customWidget = this.findCustomWidget();
   }
 
-  protected writeInit(tag: Tag): void {
+  protected writeInit(tag: QualifiedTag): void {
     this.write(this.indent);
     if (tag.attributes.id && this.customWidget) {
-      let id: string = tag.attributes.id;
+      let id: string = tag.attributes.id.value;
       this.customWidget.addField(`protected ${id}: ${this.type};`);
       this.write(`this.${id} = `);
     }

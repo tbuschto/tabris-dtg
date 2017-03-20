@@ -1,20 +1,27 @@
-import {Tag} from 'sax';
+import {QualifiedTag} from 'sax';
 import CodeElement from './CodeElement';
 
 abstract class Widget extends CodeElement {
 
   get type(): string {
-    return 'tabris.' + this.tagName;
+    if (this.tag.prefix) {
+      return this.tag.prefix + '_' + this.tag.local;
+    } else {
+      return 'tabris.' + this.tag.name;
+    }
   }
 
-  protected writeProperties(tag: Tag) {
+  protected writeProperties(tag: QualifiedTag) {
     this.write('{\n');
     this.indent += '  ';
     let separator: string = '';
     for (let property in tag.attributes) {
-      this.write(separator);
-      this.writeProperty(property, tag.attributes[property]);
-      separator = `,\n`;
+      let xmlValue = tag.attributes[property];
+      if (!xmlValue.prefix) {
+        this.write(separator);
+        this.writeProperty(property, xmlValue.value);
+        separator = `,\n`;
+      }
     }
     this.indent = this.indent.slice(2);
     this.write('\n' + this.indent + '}');
@@ -49,7 +56,7 @@ abstract class Widget extends CodeElement {
     // nothing to do
   }
 
-  protected getChildType(tag: Tag): string {
+  protected getChildType(tag: QualifiedTag): string {
     return 'NewWidget';
   }
 

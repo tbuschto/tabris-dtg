@@ -1,4 +1,4 @@
-<ui win_theme="dark">
+<ui xmlns:import="import(./CustomWidget.xml)" win_theme="dark">
   <contentView background="blue"  opacity="0.4">
     <TextView text="Hello World" highlightOnTouch="true"/>
     <ImageView />
@@ -10,5 +10,6 @@
   </contentView>
   <drawer>
     <CollectionView/>
+    <import:CustomWidget test='defaults to string'></import:CustomWidget>
   </drawer>
 </ui>
