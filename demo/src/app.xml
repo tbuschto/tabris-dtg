@@ -1,0 +1,5 @@
+<ui>
+  <contentView>
+    <TextView text="Hello World"/>
+  </contentView>
+</ui>

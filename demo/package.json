@@ -1,0 +1,16 @@
+{
+  "name": "demo",
+  "version": "0.1.0",
+  "main": "dist/app.xml.js",
+  "private": true,
+  "scripts": {
+    "build": "tsc -p .",
+    "start": "node .. ./src/app.xml && npm run build && hs"
+  },
+  "dependencies": {
+    "tabris": "^2.0.0-beta2"
+  },
+  "devDependencies": {
+    "typescript": "^2.2.1"
+  }
+}
