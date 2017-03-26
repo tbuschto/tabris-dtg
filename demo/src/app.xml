@@ -1,0 +1,10 @@
+<ui xmlns:import="import(./HelloTab.xml)">
+  <contentView>
+    <TabFolder left="0" top="0" right="0" bottom="0">
+      <import:HelloTab/>
+      <Tab title="Tab 2">
+        <TextView left="12" top="12" font="italic 24px" text="World"/>
+      </Tab>
+    </TabFolder>
+  </contentView>
+</ui>

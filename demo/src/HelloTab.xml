@@ -1,0 +1,4 @@
+<Tab title="Tab 1">
+  <TextView left="12" top="12" font="italic 24px" text="Hello" id="message"/>
+  <Button left="12" top="prev() 12" text="What?" id="button"/>
+</Tab>
