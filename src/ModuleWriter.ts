@@ -6,6 +6,7 @@ import SingletonWidget from './elements/SingletonWidget';
 import NewWidget from './elements/NewWidget';
 import CustomWidget from './elements/CustomWidget';
 import TabrisAPI, {API} from './TabrisAPI';
+import {CustomType} from './CustomAPI';
 import Scope from './Scope';
 import {basename} from 'path';
 
@@ -13,7 +14,7 @@ const tslint = '/* tslint:disable */';
 const tabrisImport = `import * as tabris from 'tabris';`;
 const catchImport = /^import\((.+)\)$/;
 
-interface ImportResolver {(path: string): API; };
+interface ImportResolver {(path: string): CustomType; };
 
 export default class ModuleWriter {
 
@@ -83,7 +84,7 @@ export default class ModuleWriter {
           for (let file of files) {
             let path: string = file.trim().slice(0, -4);
             this.writeImport(ns, path);
-            this.scope.addNamespace(ns, this.importResolver(path));
+            this.scope.addType(ns, basename(path), this.importResolver(path));
           }
         }
       }

@@ -10,7 +10,7 @@
   </contentView>
   <drawer>
     <CollectionView/>
-    <import:CustomWidget test='defaults to string'></import:CustomWidget>
-    <import:CustomWidget2 test='defaults to string'></import:CustomWidget2>
+    <import:CustomWidget highlightOnTouch="true"></import:CustomWidget>
+    <import:CustomWidget2 opacity="0.3"></import:CustomWidget2>
   </drawer>
 </ui>

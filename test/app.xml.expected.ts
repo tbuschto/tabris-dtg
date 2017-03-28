@@ -32,9 +32,9 @@ tabris.ui.contentView.set({
 tabris.ui.drawer.append(
   new tabris.CollectionView(),
   new _import_CustomWidget({
-    'test': 'defaults to string'
+    'highlightOnTouch': true
   }),
   new _import_CustomWidget2({
-    'test': 'defaults to string'
+    'opacity': 0.3
   })
 );
