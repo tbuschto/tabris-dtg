@@ -5,7 +5,7 @@ import Widget from './Widget';
 export default class UI extends RootWidget {
 
   get type(): string {
-    return 'tabris.UI';
+    return 'UI';
   }
 
   protected writeInit(tag: QualifiedTag): void {

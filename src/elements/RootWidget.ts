@@ -1,17 +1,17 @@
 import CodeElement from './CodeElement';
 import Widget from './Widget';
-import {API} from '../TabrisAPI';
+import Scope from '../Scope';
 
 interface IElementFactory {(type: string, parent: CodeElement): CodeElement; };
 interface IWriter {(data: string): void; };
 
 abstract class RootWidget extends Widget {
 
-  protected readonly _api: API;
+  protected readonly _api: Scope;
   private elementFactory: IElementFactory;
   private writer: IWriter;
 
-  constructor(writer: IWriter, elementFactory: IElementFactory, api: API) {
+  constructor(writer: IWriter, elementFactory: IElementFactory, api: Scope) {
     super(null);
     this.writer = writer;
     this.elementFactory = elementFactory;
@@ -22,7 +22,7 @@ abstract class RootWidget extends Widget {
     this.writer(data);
   }
 
-  protected get api(): API {
+  protected get api(): Scope {
     return this._api;
   }
 

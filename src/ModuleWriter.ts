@@ -79,13 +79,19 @@ export default class ModuleWriter {
         let matches = catchImport.exec(xmlValue.value);
         if (matches) {
           let ns: string = xmlValue.local;
-          let path: string = matches[1].slice(0, -4);
-          let importName: string = ns + '_' + basename(path);
-          this.stream.write(`import ${importName} from '${path}';\n`);
-          this.scope.addNamespace(ns, this.importResolver(path));
+          let files = matches[1].split(',');
+          for (let file of files) {
+            let path: string = file.trim().slice(0, -4);
+            this.writeImport(ns, path);
+            this.scope.addNamespace(ns, this.importResolver(path));
+          }
         }
       }
     }
+  }
+
+  private writeImport(ns: string, path: string): void {
+    this.stream.write(`import _${ns}_${basename(path)} from '${path}';\n`);
   }
 
 }

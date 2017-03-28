@@ -4,7 +4,7 @@ import * as tabris from 'tabris';
 export default class extends tabris.Composite {
 
   constructor(properties?: tabris.CompositeProperties) {
-    super(Object.assign({
+    super((Object as any).assign({
       'background': 'blue',
       'id': 'foo'
     }, properties || {}));

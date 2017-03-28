@@ -1,5 +1,5 @@
 import {QualifiedTag} from 'sax';
-import {API} from '../TabrisAPI';
+import Scope from '../Scope';
 
 export enum State {uninitialized, initialized, open, closed};
 
@@ -75,7 +75,7 @@ abstract class CodeElement {
 
   protected abstract writeEnd(): void;
 
-  protected get api(): API {
+  protected get api(): Scope {
     return this.parent.api;
   }
 

@@ -8,10 +8,9 @@ export default class Scope {
     this.namespaces[name] = api;
   }
 
-  public getPropertyType(typeName: string, propName: string): string {
-    let type: string[] = typeName.split(/[\._]/);
-    if (this.namespaces[type[0]]) {
-      return this.namespaces[type[0]].getPropertyType(type[1], propName);
+  public getPropertyType(ns: string, typeName: string, propName: string): string {
+    if (this.namespaces[ns]) {
+      return this.namespaces[ns].getPropertyType(typeName, propName);
     }
     return null;
   }

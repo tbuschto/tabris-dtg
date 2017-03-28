@@ -16,10 +16,10 @@ export default class NewWidget extends Widget {
     this.write(this.indent);
     if (tag.attributes.id && this.customWidget) {
       let id: string = tag.attributes.id.value;
-      this.customWidget.addField(`protected ${id}: ${this.type};`);
+      this.customWidget.addField(`protected ${id}: ${this.localType};`);
       this.write(`this.${id} = `);
     }
-    this.write('new ' + this.type + '(');
+    this.write('new ' + this.localType + '(');
     if (Object.keys(tag.attributes).length > 0) {
       this.writeProperties(tag);
     }

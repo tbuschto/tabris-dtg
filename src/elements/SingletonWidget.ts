@@ -9,8 +9,9 @@ export default class SingletonWidget extends Widget {
     this.indent = '';
   }
 
-  get type() {
-    return 'tabris.' + this.api.getPropertyType((this.parent as Widget).type, this.tag.name);
+  public get type() {
+    let parent: Widget = <Widget> this.parent;
+    return this.api.getPropertyType(parent.namespace, parent.type, this.tag.name);
   }
 
   protected writeInit(tag: QualifiedTag): void {

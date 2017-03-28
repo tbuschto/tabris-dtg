@@ -3,11 +3,19 @@ import CodeElement from './CodeElement';
 
 abstract class Widget extends CodeElement {
 
-  get type(): string {
-    if (this.tag.prefix) {
-      return this.tag.prefix + '_' + this.tag.local;
+  public get type(): string {
+    return this.tag.local;
+  }
+
+  public get namespace(): string {
+    return this.tag.prefix || 'tabris';
+  }
+
+  public get localType(): string {
+    if (this.namespace === 'tabris') {
+      return 'tabris.' + this.type;
     } else {
-      return 'tabris.' + this.tag.name;
+      return '_' + this.namespace + '_' + this.type;
     }
   }
 
@@ -28,7 +36,7 @@ abstract class Widget extends CodeElement {
   }
 
   protected writeProperty(name: string, value: string): boolean {
-    let type = this.api.getPropertyType(this.type, name);
+    let type = this.api.getPropertyType(this.namespace, this.type, name);
     if (!type) {
       this.write('//');
     }

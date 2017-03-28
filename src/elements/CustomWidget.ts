@@ -10,9 +10,9 @@ export default class CustomWidget extends RootWidget {
   }
 
   protected writeInit(tag: QualifiedTag): void {
-    this.write('export default class extends ' + this.type + ' {\n\n');
+    this.write('export default class extends ' + this.localType + ' {\n\n');
     this.indent += '  ';
-    this.write(this.indent + 'constructor(properties?: ' + this.type + 'Properties) {\n' );
+    this.write(this.indent + 'constructor(properties?: ' + this.localType + 'Properties) {\n' );
     this.indent += '  ';
     if (Object.keys(tag.attributes).length > 0) {
       this.write(this.indent + 'super((Object as any).assign(');
