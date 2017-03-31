@@ -4,7 +4,7 @@
     <ImageView />
     <TextInput text="Hello World2" foo="bar" message="Hello World3"/>
     <Composite id="foo">
-      <TextView/>
+      <TextView left='23' centerY='23' height='23'/>
       <ImageView/>
     </Composite>
   </contentView>

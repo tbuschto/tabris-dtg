@@ -73,7 +73,7 @@ abstract class Widget extends CodeElement {
 export default Widget;
 
 function format(type: string, value: string) {
-  if (type === 'boolean' || type === 'number') {
+  if (type === 'boolean' || type === 'number' || type === 'offset' || type === 'dimension') {
     return value;
   }
   return '\'' + value + '\'';

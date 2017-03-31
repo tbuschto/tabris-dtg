@@ -24,7 +24,11 @@ tabris.ui.contentView.set({
   new tabris.Composite({
     'id': 'foo'
   }).append(
-    new tabris.TextView(),
+    new tabris.TextView({
+      'left': '23',
+      'centerY': 23,
+      'height': 23
+    }),
     new tabris.ImageView()
   )
 );
