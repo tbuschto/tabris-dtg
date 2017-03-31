@@ -59,7 +59,7 @@ function convertAll(dir: string, done: typeof finishAll) {
             successCount += innerSuccessCount;
             next();
           });
-        } else if (file.endsWith('.xml') {
+        } else if (file.endsWith('.xml')) {
           convert(file, (success) => {
             if (success) {
               successCount++;
