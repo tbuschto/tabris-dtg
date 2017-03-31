@@ -4,8 +4,11 @@
   "main": "dist/app.xml.js",
   "private": true,
   "scripts": {
-    "build": "tsc -p .",
-    "start": "node .. ./src/app.xml && node .. ./src/HelloTab.xml && npm run build && hs"
+    "serve": "tabris serve",
+    "tsconvert": "tsc -p .",
+    "xmlconvert": "node .. . ",
+    "build": "npm run xmlconvert && npm run tsconvert",
+    "start": "npm run build && npm run serve"
   },
   "dependencies": {
     "tabris": "^2.0.0-beta2"

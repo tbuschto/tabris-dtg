@@ -11,6 +11,7 @@
     "variable-name": [false],
     "no-console": [false],
     "forin": false,
-    "interface-name": [false]
+    "interface-name": [false],
+    "only-arrow-functions": [true, "allow-declarations", "allow-named-functions"]
   }
 }
